@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.vscode/
+runs/
+
+*.pyc
+*.pyo
+
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
