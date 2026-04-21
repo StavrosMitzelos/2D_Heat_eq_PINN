@@ -7,13 +7,18 @@ import torch
 
 
 def exact_solution(t: torch.Tensor, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
-    """Ακριβής λύση της εξίσωσης θερμότητας στο συγκεκριμένο πρόβλημα"""
+    """Ακριβής λύση με μη μηδενική Dirichlet συνθήκη στο πάνω σύνορο"""
 
-    return (
+    x_unit = 0.5 * (x + 1.0)
+    y_unit = 0.5 * (y + 1.0)
+
+    steady_state = torch.sin(np.pi * x_unit) * torch.sinh(np.pi * y_unit) / np.sinh(np.pi)
+    transient = (
         torch.exp(-0.5 * np.pi**2 * t)
-        * torch.sin(0.5 * np.pi * (x + 1.0))
-        * torch.sin(0.5 * np.pi * (y + 1.0))
+        * torch.sin(np.pi * x_unit)
+        * torch.sin(np.pi * y_unit)
     )
+    return steady_state + transient
 
 
 def pde_residual(
